@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession();
+
 builder.Services.AddDbContext<GoodBooksMvcContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GoodBooksMvcDb") ?? throw new InvalidOperationException("Connection string 'GoodBooksMvcDb' not found.")).UseSnakeCaseNamingConvention());
 
@@ -19,6 +21,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

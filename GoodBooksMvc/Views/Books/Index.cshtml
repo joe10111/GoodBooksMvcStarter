@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Book>
+
+@{
+    var highlightedBooks = ViewBag.HighlightedBooks as List<Book>;
+    var otherBooks = ViewBag.OtherBooks as List<Book>;
+    var compareList = ViewBag.CompareList as HashSet<string>;
+}
+
+    <h1>Books</h1>
+
+<h2>Books to Compare</h2>
+    <ul>
+    @foreach (var book in highlightedBooks)
+    {
+        <li>
+            <p>ID: @book.Id, Title: @book.Title, Description: @book.Description</p>
+
+            <a href="@Url.Action("ToggleCompare", "Books", new { id = book.Id })">Remove</a>
+        </li>
+        
+    }
+    </ul>
+
+<h2>Other Books</h2>
+    <ul>
+    @foreach (var book in Model)
+    {
+        <li>
+            <p>ID: @book.Id, Title: @book.Title, Description: @book.Description</p>
+
+            @if (!compareList.Contains(book.Id.ToString()))
+            {
+                <a href="@Url.Action("ToggleCompare", "Books", new { id = book.Id })">Compare</a>
+            }
+        </li>
+    }
+    </ul>

@@ -15,6 +15,18 @@ namespace GoodBooksMvc.Controllers
 
         public IActionResult Index()
         {
+              // Get the count from the session state and initialize to 0
+            int count = HttpContext.Session.GetInt32("visitCount") ?? 0;
+
+              // Increment the count
+            count += 1;
+
+              // Store the count back into the session state
+            HttpContext.Session.SetInt32("visitCount", count);
+
+              // Pass the count to the view
+            ViewBag.VisitCount = count;
+
             return View();
         }
 
